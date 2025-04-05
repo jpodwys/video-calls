@@ -6,16 +6,17 @@ import CallButtons from "@/components/call/call-buttons";
 
 export type ConnectionState = 'unconnected' | 'connecting' | 'connected' | 'error';
 
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
 // Conditionally swap this based on device?
 // Handle orientation change?
 // I should also consider 480p in order to conserve bandwidth.
 export const videoCaptureDefaults: VideoCaptureOptions = {
   facingMode: 'user',
   resolution: {
-    // width: 1280,
-    // height: 720,
-    width: 720,
-    height: 1280,
+    aspectRatio: 16/9,
+    width: isSafari ? 720 : 1280,
+    height: isSafari ? 1280 : 720,
     frameRate: 30,
   },
 };
