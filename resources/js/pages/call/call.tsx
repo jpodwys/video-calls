@@ -28,9 +28,6 @@ export default function Call({ url, token }: { url: string, token: string }) {
   const [remoteVideoTrack, setRemoteVideoTrack] = useState<RemoteVideoTrack | undefined>();
   const [remoteParticipantCount, setRemoteParticipantCount] = useState(0);
 
-  useEffect(() => {
-  }, [remoteParticipantCount]);
-
   const onParticipantConnected = useCallback(() => {
     setRemoteParticipantCount(remoteParticipantCount + 1);
   }, [remoteParticipantCount, setRemoteParticipantCount]);
@@ -126,7 +123,7 @@ export default function Call({ url, token }: { url: string, token: string }) {
         <>
           <Participant track={remoteVideoTrack} />
           <Participant isLocal track={localVideoTrack} isAlone={remoteParticipantCount === 0} />
-          <CallButtons room={room} />
+          <CallButtons room={room} localVideoTrack={localVideoTrack} />
         </>
       }
     </div>
