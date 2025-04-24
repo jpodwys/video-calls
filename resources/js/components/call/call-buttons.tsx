@@ -1,5 +1,5 @@
 import { videoCaptureDefaults } from "@/pages/call/call";
-import { LocalVideoTrack, Room, VideoCaptureOptions } from "livekit-client";
+import { LocalVideoTrack, Room } from "livekit-client";
 import { Mic, MicOff, RefreshCcw, Video, VideoOff, X } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { Button } from "../ui/button";
@@ -30,10 +30,11 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
     }
     const { facingMode } = localVideoTrack.mediaStreamTrack.getSettings();
     if (facingMode) {
-      const constraints: VideoCaptureOptions = facingMode === 'user'
-        ? { facingMode: 'environment' }
-        : videoCaptureDefaults;
-      localVideoTrack.restartTrack(constraints);
+      alert(facingMode);
+      localVideoTrack.restartTrack({
+        ...videoCaptureDefaults,
+        facingMode: 'user', // facingMode === 'user' ? 'environment' : 'user',
+      });
     }
   }, [localVideoTrack]);
 
