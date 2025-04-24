@@ -12,7 +12,8 @@ interface ParticipantProps {
 // I could also hide that by making remote and local participant components
 // Local participant should take up the whole screen when no one else is here
 export default function Participant({ isLocal, track, isAlone }: ParticipantProps) {
-  const { width, height } = track?.mediaStreamTrack.getSettings() ?? {};
+  const { width, height, facingMode } = track?.mediaStreamTrack.getSettings() ?? {};
+  const isFrontFacing = facingMode === 'user';
   const isPortrait = (height ?? 0) > (width ?? 0);
   let className = isLocal && !isAlone
     ? 'absolute top-2 right-2 h-50'
@@ -24,6 +25,6 @@ export default function Participant({ isLocal, track, isAlone }: ParticipantProp
     return null;
   }
   return (
-    <Video mirror={isLocal} track={track} className={className} />
+    <Video mirror={isLocal && !isFrontFacing} track={track} className={className} />
   );
 }

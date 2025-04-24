@@ -28,12 +28,6 @@ export default function Call({ url, token }: { url: string, token: string }) {
   const [remoteVideoTrack, setRemoteVideoTrack] = useState<RemoteVideoTrack | undefined>();
   const [remoteParticipantCount, setRemoteParticipantCount] = useState(0);
 
-  useEffect(() => {
-    // @ts-ignore
-    window.track = localVideoTrack;
-    console.log('track set');
-  }, [localVideoTrack]);
-
   const onParticipantConnected = useCallback(() => {
     setRemoteParticipantCount(remoteParticipantCount + 1);
   }, [remoteParticipantCount, setRemoteParticipantCount]);
