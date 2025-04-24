@@ -8,9 +8,10 @@ import { NavigationMenu } from "@radix-ui/react-navigation-menu";
 interface CallButtonsProps {
   room: Room;
   localVideoTrack?: LocalVideoTrack;
+  setFacingMode: React.Dispatch<React.SetStateAction<"user" | "environment">>;
 }
 
-export default function CallButtons({ room, localVideoTrack }: CallButtonsProps) {
+export default function CallButtons({ room, localVideoTrack, setFacingMode }: CallButtonsProps) {
   const [isMicOn, setIsMicOn] = useState(true);
   const [isMicBusy, setIsMicBusy] = useState(false);
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -30,12 +31,14 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
     }
     const { facingMode } = localVideoTrack.mediaStreamTrack.getSettings();
     if (facingMode) {
+      const newFacingMode = facingMode === 'user' ? 'environment' : 'user';
       await localVideoTrack.restartTrack({
         ...videoCaptureDefaults,
-        facingMode: facingMode === 'user' ? 'environment' : 'user',
+        facingMode: newFacingMode,
       });
+      setFacingMode(newFacingMode);
     }
-  }, [localVideoTrack?.mediaStreamTrack]);
+  }, [localVideoTrack]);
 
   const toggleMic = useCallback(async () => {
     setIsMicBusy(true);

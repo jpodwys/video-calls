@@ -27,6 +27,7 @@ export default function Call({ url, token }: { url: string, token: string }) {
   const [localVideoTrack, setLocalVideoTrack] = useState<LocalVideoTrack | undefined>();
   const [remoteVideoTrack, setRemoteVideoTrack] = useState<RemoteVideoTrack | undefined>();
   const [remoteParticipantCount, setRemoteParticipantCount] = useState(0);
+  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('user');
 
   const onParticipantConnected = useCallback(() => {
     setRemoteParticipantCount(remoteParticipantCount + 1);
@@ -122,8 +123,8 @@ export default function Call({ url, token }: { url: string, token: string }) {
       {connectionState === 'connected' &&
         <>
           <Participant track={remoteVideoTrack} />
-          <Participant isLocal track={localVideoTrack} isAlone={remoteParticipantCount === 0} />
-          <CallButtons room={room} localVideoTrack={localVideoTrack} />
+          <Participant isLocal isFrontFacing={facingMode !== 'environment'} track={localVideoTrack} isAlone={remoteParticipantCount === 0} />
+          <CallButtons room={room} localVideoTrack={localVideoTrack} setFacingMode={setFacingMode} />
         </>
       }
     </div>
