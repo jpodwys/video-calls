@@ -25,6 +25,6 @@ export default function Participant({ isLocal, track, isAlone }: ParticipantProp
     return null;
   }
   return (
-    <Video mirror={isLocal && !isFrontFacing} track={track} className={className} />
+    <Video mirror={isLocal && isFrontFacing} track={track} className={className} />
   );
 }
