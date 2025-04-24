@@ -24,7 +24,7 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
     await room.disconnect();
   }, [room]);
 
-  const flipCamera = useCallback(async (track: LocalVideoTrack) => {
+  const flipCamera = async (track: LocalVideoTrack) => {
     if (!track) {
       return;
     }
@@ -36,7 +36,7 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
         facingMode: facingMode === 'user' ? 'environment' : 'user',
       });
     }
-  }, []);
+  };
 
   const toggleMic = useCallback(async () => {
     setIsMicBusy(true);
