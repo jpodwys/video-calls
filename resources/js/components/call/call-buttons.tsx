@@ -1,6 +1,6 @@
 import { videoCaptureDefaults } from "@/pages/call/call";
 import { LocalVideoTrack, Room } from "livekit-client";
-import { Mic, MicOff, RefreshCcw, SwitchCamera, Video, VideoOff, X } from "lucide-react";
+import { Mic, MicOff, RefreshCcw, Video, VideoOff, X } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { Button } from "../ui/button";
 import { NavigationMenu } from "@radix-ui/react-navigation-menu";
@@ -29,10 +29,13 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
       return;
     }
     const { facingMode } = localVideoTrack.mediaStreamTrack.getSettings();
-    localVideoTrack?.restartTrack({
-      ...videoCaptureDefaults,
-      facingMode: facingMode === 'user' ? 'environment' : 'user',
-    });
+    if (facingMode) {
+      alert(facingMode);
+      localVideoTrack.restartTrack({
+        ...videoCaptureDefaults,
+        facingMode: facingMode === 'user' ? 'environment' : 'user',
+      });
+    }
   }, [localVideoTrack]);
 
   const toggleMic = useCallback(async () => {
