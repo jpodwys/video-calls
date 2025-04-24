@@ -12,7 +12,7 @@ const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 // Handle orientation change?
 // I should also consider 480p in order to conserve bandwidth.
 export const videoCaptureDefaults: VideoCaptureOptions = {
-  facingMode: 'environment',
+  facingMode: 'user',
   resolution: {
     aspectRatio: 16/9,
     width: isSafari ? 720 : 1280,

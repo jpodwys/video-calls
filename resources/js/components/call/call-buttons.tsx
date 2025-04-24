@@ -31,9 +31,9 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
     const { facingMode } = localVideoTrack.mediaStreamTrack.getSettings();
     if (facingMode) {
       alert(facingMode);
-      localVideoTrack.restartTrack({
-        ...videoCaptureDefaults,
-        facingMode: 'user', // facingMode === 'user' ? 'environment' : 'user',
+      await localVideoTrack.restartTrack({
+        // ...videoCaptureDefaults,
+        facingMode: facingMode === 'user' ? 'environment' : 'user',
       });
     }
   }, [localVideoTrack]);
