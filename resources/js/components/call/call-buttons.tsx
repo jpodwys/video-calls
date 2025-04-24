@@ -28,16 +28,13 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
     if (!localVideoTrack) {
       return;
     }
-    const { facingMode } = localVideoTrack.mediaStreamTrack.getSettings();
-    if (facingMode) {
-      alert(facingMode);
-      const newFacingMode = facingMode === 'user' ? 'environment' : 'user';
-      alert(newFacingMode);
+    // const { facingMode } = localVideoTrack.mediaStreamTrack.getSettings();
+    // if (facingMode) {
       await localVideoTrack.restartTrack({
         // ...videoCaptureDefaults,
         facingMode: 'environment',
       });
-    }
+    // }
   }, [localVideoTrack?.mediaStreamTrack]);
 
   const toggleMic = useCallback(async () => {
