@@ -24,19 +24,19 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
     await room.disconnect();
   }, [room]);
 
-  const flipCamera = async () => {
-    if (!localVideoTrack) {
+  const flipCamera = useCallback(async (track: LocalVideoTrack) => {
+    if (!track) {
       return;
     }
-    const { facingMode } = localVideoTrack.mediaStreamTrack.getSettings();
+    const { facingMode } = track.mediaStreamTrack.getSettings();
     if (facingMode) {
       alert(facingMode);
-      await localVideoTrack.restartTrack({
-        ...videoCaptureDefaults,
+      await track.restartTrack({
+        // ...videoCaptureDefaults,
         facingMode: facingMode === 'user' ? 'environment' : 'user',
       });
     }
-  };
+  }, []);
 
   const toggleMic = useCallback(async () => {
     setIsMicBusy(true);
@@ -56,6 +56,10 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
     setIsCameraBusy(false);
   }, [room, isCameraOn, setIsCameraOn]);
 
+  if (!localVideoTrack) {
+    return;
+  }
+
   return (
     <div className="absolute flex bottom-5 w-full">
       <NavigationMenu className="flex gap-3 m-auto">
@@ -63,7 +67,7 @@ export default function CallButtons({ room, localVideoTrack }: CallButtonsProps)
           <X />
         </Button>
         {supportsFacingMode &&
-          <Button onClick={flipCamera} size="lg">
+          <Button onClick={() => flipCamera(localVideoTrack)} size="lg">
             <RefreshCcw />
           </Button>
         }
