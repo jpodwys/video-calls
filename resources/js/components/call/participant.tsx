@@ -13,7 +13,7 @@ interface ParticipantProps {
 // Local participant should take up the whole screen when no one else is here
 export default function Participant({ isLocal, track, isAlone }: ParticipantProps) {
   const { width, height, facingMode } = track?.mediaStreamTrack.getSettings() ?? {};
-  const isFrontFacing = facingMode === 'user';
+  const isFrontFacing = facingMode !== 'environment';
   const isPortrait = (height ?? 0) > (width ?? 0);
   let className = isLocal && !isAlone
     ? 'absolute top-2 right-2 h-50'
